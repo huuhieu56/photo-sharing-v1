@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Checkbox, FormControlLabel } from "@mui/material";
 import { useLocation } from "react-router-dom";

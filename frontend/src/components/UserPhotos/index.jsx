@@ -1,18 +1,12 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import {
-  Typography,
-  Divider,
-  Box,
   List,
-  ListItem,
-  ListItemText,
   Toolbar,
-  Button
+  Button,
 } from "@mui/material";
 
 import "./styles.css";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getUserPhoto } from "../../lib/fetchModelData";
 import PhotoCard from "./Photo/PhotoCard";
 

@@ -1,55 +1,44 @@
-/**
- * fetchModel - Fetch a model from the web server.
- *
- * @param {string} url      The URL to issue the GET request.
- *
- */
-
 import axios from 'axios';
-import models from '../modelData/models';
 
-const API_BASE_URL = "http://localhost:8081/api";
-
-// function fetchModel(url) {
-//   const models = null;
-//   return models;
-// }
+const BASE_URL = "http://localhost:8081";
+const API_BASE_URL = `${BASE_URL}/api`;
 
 async function getListUser() {
   const { data } = await axios.get(`${API_BASE_URL}/user/list`);
-  // const data = models.userListModel();
   return data;
 }
 
 async function getUserProfile(id) {
   const { data } = await axios.get(`${API_BASE_URL}/user/${id}`);
-  // const data = models.userModel(id);
   return data;
 }
 
 async function getUserPhoto(id) {
   const { data } = await axios.get(`${API_BASE_URL}/photo/photosOfUser/${id}`);
-  // const data = models.photoOfUserModel(id);
   return data;
 }
 
 async function getPhotoById(id) {
   const { data } = await axios.get(`${API_BASE_URL}/photo/photoById/${id}`);
-  // const data = models.photoModel(id);
-  return data
+  return data;
 }
 
-async function getSchemaInfo() {
-  // const { data } = await axios.get(`${API_BASE_URL}/test/info`);
-  const data = models.schemaInfo();
+async function getListUserWithCounts() {
+  const { data } = await axios.get(`${API_BASE_URL}/user/listWithCounts`);
+  return data;
+}
+
+async function getCommentsOfUser(id) {
+  const { data } = await axios.get(`${API_BASE_URL}/user/commentsOfUser/${id}`);
   return data;
 }
 
 export {
+  BASE_URL,
   getListUser,
   getUserProfile,
   getUserPhoto,
-  getPhotoById
+  getPhotoById,
+  getListUserWithCounts,
+  getCommentsOfUser,
 };
-
-// export default fetchModel;

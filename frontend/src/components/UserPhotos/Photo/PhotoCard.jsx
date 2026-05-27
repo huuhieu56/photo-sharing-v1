@@ -1,17 +1,15 @@
-import React from "react";
-import { useEffect, useState } from "react";
 import {
   Typography,
   Divider,
-  Box,
   List,
   ListItem,
   ListItemText,
 } from "@mui/material";
 
 import "../styles.css";
-import { useParams, Link } from "react-router-dom";
-import { getPhotoById } from "../../../lib/fetchModelData";
+import { Link } from "react-router-dom";
+import { BASE_URL } from "../../../lib/fetchModelData";
+
 
 function PhotoCard ({photo}) {
     if (!photo) {
@@ -28,7 +26,7 @@ function PhotoCard ({photo}) {
             }}
           >
             <img
-              src={`/images/${photo.file_name}`}
+              src={`${BASE_URL}/images/${photo.file_name}`}
               alt={photo.file_name}
               style={{
                 width: "600px",

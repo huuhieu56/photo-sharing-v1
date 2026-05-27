@@ -1,15 +1,16 @@
 import "./App.css";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Grid, Paper } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import TopBar from "./components/TopBar";
+import UserComments from "./components/UserComments";
 import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
 
-const App = (props) => {
+const App = () => {
   const [checked, setChecked] = useState(false);
 
   const handleClick = () => {
@@ -33,6 +34,7 @@ const App = (props) => {
                 <Route path="/users/:userId" element={<UserDetail />} />
                 <Route path="/photos/:userId" element={<UserPhotos checked={checked} />} />   
                 <Route path="/photos/:userId/:photoId" element={<UserPhotos checked={checked} />} />
+                <Route path="/comments/:userId" element={<UserComments />} />
               </Routes>
             </Paper>
           </Grid>
