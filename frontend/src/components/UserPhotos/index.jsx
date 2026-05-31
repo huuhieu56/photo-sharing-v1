@@ -22,6 +22,10 @@ function UserPhotos({ checked = false }) {
     getUserPhoto(userId).then(data => setPhotos(data || []));
   }, [userId]);
 
+  function reloadPhotos() {
+    getUserPhoto(userId).then(data => setPhotos(data || []));
+  }
+
   const idx = photoId ? Math.max(0, photos.findIndex(p => p._id === photoId)) : 0;
 
   if (!photos.length) return null;
@@ -29,7 +33,7 @@ function UserPhotos({ checked = false }) {
   if (checked) {
     return (
       <div>
-        <PhotoCard photo={photos[idx]} />
+        <PhotoCard photo={photos[idx]} onCommentAdded={reloadPhotos} />
         <Toolbar sx={{ gap: 2, justifyContent: "space-between" }}>
           <Button
             variant="contained"
@@ -54,7 +58,7 @@ function UserPhotos({ checked = false }) {
     <div>
       <List component="nav">
         {photos.map((photo) => (
-          <PhotoCard photo={photo}/>
+          <PhotoCard photo={photo} onCommentAdded={reloadPhotos} />
         ))}
       </List>
     </div>

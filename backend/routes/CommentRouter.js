@@ -23,4 +23,33 @@ router.get("/userCount/:id", async(request, response) => {
     }
 });
 
+router.post("/commentsOfPhoto/:photo_id", async (request, response) => {
+    const photoId = request.params.photo_id;
+    const { comment } = request.body;
+    const userId = request.user_id;
+    console.log("[POST] | api/comment/commentsOfPhoto/" + photoId);
+
+    if (!comment || comment.trim() === "") {
+        return response.status(400).json("Comment cannot be empty");
+    }
+
+    try {
+        const photo = await Photo.findOne({ _id: photoId });
+        if (!photo) {
+            return response.status(400).json("Photo not found");
+        }
+
+        photo.comments.push({
+            comment: comment,
+            date_time: new Date(),
+            user_id: userId,
+        });
+        await photo.save();
+
+        return response.status(200).json("Comment added");
+    } catch (error) {
+        return response.status(500).json("Server Error: " + error);
+    }
+});
+
 module.exports = router;

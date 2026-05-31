@@ -1,4 +1,8 @@
+import { useState } from "react";
 import {
+  Box,
+  Button,
+  TextField,
   Typography,
   Divider,
   List,
@@ -8,14 +12,28 @@ import {
 
 import "../styles.css";
 import { Link } from "react-router-dom";
-import { BASE_URL } from "../../../lib/fetchModelData";
+import { BASE_URL, addComment } from "../../../lib/fetchModelData";
 
 
-function PhotoCard ({photo}) {
+function PhotoCard ({photo, onCommentAdded}) {
+    const [commentText, setCommentText] = useState("");
+
     if (!photo) {
         return null;
     }
-    
+
+    async function handleSubmitComment(e) {
+        e.preventDefault();
+        if (!commentText.trim()) return;
+        try {
+            await addComment(photo._id, commentText);
+            setCommentText("");
+            if (onCommentAdded) onCommentAdded();
+        } catch (err) {
+            console.error("Failed to add comment:", err);
+        }
+    }
+
     return (
         <ListItem
             key={photo._id || photo.file_name}
@@ -65,6 +83,18 @@ function PhotoCard ({photo}) {
                 <Typography>"No comments yet."</Typography>
               )}
             </List>
+
+            <Box component="form" onSubmit={handleSubmitComment} sx={{ display: "flex", gap: 1, mt: 1, width: "100%" }}>
+              <TextField
+                label="Add a comment"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                size="small"
+                sx={{ flex: 1 }}
+              />
+              <Button type="submit" variant="contained" size="small">Submit</Button>
+            </Box>
+
             <Divider sx={{ width: "100%", mt: 2 }} />
           </ListItem>
     )

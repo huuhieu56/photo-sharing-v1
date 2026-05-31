@@ -1,7 +1,18 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const Photo = require("../db/photoModel");
 const User = require("../db/userModel");
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, "../images"),
+    filename: (request, file, cb) => {
+        const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9) + path.extname(file.originalname);
+        cb(null, uniqueName);
+    },
+});
+const upload = multer({ storage });
 
 
 
@@ -74,6 +85,27 @@ router.get("/photoById/:id", async (request, response) => {
                             };
 
         return response.status(200).json(formatted);
+    } catch (error) {
+        return response.status(500).json("Server Error: " + error);
+    }
+});
+
+router.post("/photos/new", upload.single("photo"), async (request, response) => {
+    console.log("[POST] | api/photo/photos/new");
+    const userId = request.user_id;
+
+    if (!request.file) {
+        return response.status(400).json("No file uploaded");
+    }
+
+    try {
+        const photo = await Photo.create({
+            file_name: request.file.filename,
+            date_time: new Date(),
+            user_id: userId,
+            comments: [],
+        });
+        return response.status(200).json(photo);
     } catch (error) {
         return response.status(500).json("Server Error: " + error);
     }
