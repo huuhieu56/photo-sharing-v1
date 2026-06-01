@@ -39,8 +39,8 @@ const App = () => {
       <Router>
         <div>
           <TopBar profile={null} checked={checked} handleClick={handleClick} />
-          <Grid container spacing={2} sx={{ mt: "64px", px: 2 }}>
-            <Grid item sm={12}>
+          <Grid container spacing={2} sx={{ mt: "64px", px: 2, justifyContent: "center" }}>
+            <Grid item xs={12} sm={10} md={8} lg={6}>
               <Paper className="main-grid-item">
                 <Routes>
                   <Route path="/login" element={<LoginRegister setProfile={setProfile} />} />
