@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import axios from 'axios';
+import axios from "axios";
 
 const BASE_URL = "http://localhost:8081";
 const API_BASE_URL = `${BASE_URL}/api`;
@@ -25,7 +25,7 @@ async function logoutUser() {
 }
 
 async function registerUser(userData) {
-  const { data } = await axios.post(`${API_BASE_URL}/user`, userData);
+  const { data } = await api.post("/user", userData);
   return data;
 }
 
@@ -60,7 +60,9 @@ async function getCommentsOfUser(id) {
 }
 
 async function addComment(photoId, comment) {
-  const { data } = await api.post(`/comment/commentsOfPhoto/${photoId}`, { comment });
+  const { data } = await api.post(`/comment/commentsOfPhoto/${photoId}`, {
+    comment,
+  });
   return data;
 }
 

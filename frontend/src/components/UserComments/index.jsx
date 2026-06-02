@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
-import { BASE_URL, getCommentsOfUser, getUserProfile } from "../../lib/fetchModelData";
+import {
+  BASE_URL,
+  getCommentsOfUser,
+  getUserProfile,
+} from "../../lib/fetchModelData";
 import "./styles.css";
-
 
 function UserComments() {
   const { userId } = useParams();
@@ -32,40 +29,29 @@ function UserComments() {
 
   return (
     <div>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Comments by {userName}
-      </Typography>
-      <List>
+      <Typography variant="h6">Comments by {userName}</Typography>
+      <div>
         {comments.map((comment) => (
-          <ListItem
-            key={comment._id}
-            sx={{
-              flexDirection: "column",
-              alignItems: "flex-start",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              mb: 1,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+          <div key={comment._id}>
+            <div>
               <Link to={`/photos/${userId}/${comment.photo_id}`}>
                 <img
+                  className="comment-image"
                   src={`${BASE_URL}/images/${comment.photo_file_name}`}
                   alt={comment.photo_file_name}
-                  style={{ width: "80px", height: "auto", borderRadius: "4px" }}
                 />
               </Link>
+            </div>
+            <div>
               <Link to={`/photos/${userId}/${comment.photo_id}`}>
-                <ListItemText secondary={comment.comment} />
+                <Typography variant="body1">{comment.comment}</Typography>
               </Link>
-            </Box>
-            <ListItemText secondary={comment.date_time} />
-          </ListItem>
+            </div>
+            <Typography variant="caption">{comment.date_time}</Typography>
+          </div>
         ))}
-      </List>
-      {comments.length === 0 && (
-        <Typography>No comments found.</Typography>
-      )}
+      </div>
+      {comments.length === 0 && <Typography>No comments found.</Typography>}
     </div>
   );
 }

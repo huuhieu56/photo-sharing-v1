@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  List,
-  Toolbar,
-  Button,
-} from "@mui/material";
+import { List, Toolbar, Button } from "@mui/material";
 
 import "./styles.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -19,21 +15,22 @@ function UserPhotos({ checked = false }) {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    getUserPhoto(userId).then(data => setPhotos(data || []));
+    getUserPhoto(userId).then((data) => setPhotos(data || []));
   }, [userId]);
 
-  function reloadPhotos() {
-    getUserPhoto(userId).then(data => setPhotos(data || []));
-  }
-
-  const idx = photoId ? Math.max(0, photos.findIndex(p => p._id === photoId)) : 0;
+  const idx = photoId
+    ? Math.max(
+        0,
+        photos.findIndex((p) => p._id === photoId),
+      )
+    : 0;
 
   if (!photos.length) return null;
 
   if (checked) {
     return (
       <div>
-        <PhotoCard photo={photos[idx]} onCommentAdded={reloadPhotos} />
+        <PhotoCard photo={photos[idx]} />
         <Toolbar sx={{ gap: 2, justifyContent: "space-between" }}>
           <Button
             variant="contained"
@@ -58,7 +55,7 @@ function UserPhotos({ checked = false }) {
     <div>
       <List component="nav">
         {photos.map((photo) => (
-          <PhotoCard photo={photo} onCommentAdded={reloadPhotos} />
+          <PhotoCard photo={photo} />
         ))}
       </List>
     </div>

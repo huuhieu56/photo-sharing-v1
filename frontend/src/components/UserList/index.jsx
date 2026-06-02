@@ -43,7 +43,7 @@ function UserList () {
                     sx={{ backgroundColor: "red", color: "white", cursor: "pointer" }}
                     onClick={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
+                      // e.stopPropagation();
                       navigate(`/comments/${item._id}`);
                     }}
                   />
